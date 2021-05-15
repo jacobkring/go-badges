@@ -1,10 +1,6 @@
 name: 'Go Badge Generator'
 description: 'Replaces comments in readme with badges based on input.'
 inputs:
-  who-to-greet: # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
   readme-path:
     description: 'path to the readme file for update'
     required: false
@@ -22,13 +18,12 @@ inputs:
     required: false
     default: "-1"
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  readme: # id of output
+    description: 'The updated readme'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who-to-greet }}
     - ${{ inputs.readme-path }}
     - ${{ inputs.coverage }}
     - ${{ inputs.report-card }}

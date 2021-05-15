@@ -6,10 +6,18 @@ jobs:
     name: A job to say hello
     steps:
       - uses: actions/checkout@v2
-      - id: foo
-        uses: jacobkring/go-badges@v1.0.0-rc17
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.26.0
+        id: version
+        env:
+          RELEASE_BRANCHES: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+
+      - id: badges
+        uses: jacobkring/go-badges@${{ steps.version.outputs.tag }}
         with:
-          who-to-greet: 'Mona the Octocat'
+          version: ${{ steps.version.outputs.tag }}
       # Use the output from the `hello` step
-      - name: Get the output time
-        run: echo "The time was ${{ steps.hello.outputs.time }}"
+      - name: Get the updated readme
+        run: echo "The readme is ${{ steps.hello.outputs.readme }}"

@@ -13,11 +13,10 @@ const devVersionFlag = "<!---dev-version-->"
 func main() {
 	log.Println("Generating badges...")
 	log.Println(os.Environ())
-	log.Println(os.Getenv("1"))
-	log.Println(os.Getenv("2"))
-	log.Println(os.Getenv("3"))
-	log.Println(os.Getenv("4"))
-	log.Println(os.Getenv("5"))
+	log.Println(os.Getenv("INPUT_REPORT-CARD"))
+	log.Println(os.Getenv("INPUT_VERSION"))
+	log.Println(os.Getenv("INPUT_COVERAGE"))
+	log.Println(os.Getenv("INPUT_README-PATH"))
 
 	/*
 	if len(os.Args) < 3 {
