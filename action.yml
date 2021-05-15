@@ -1,21 +1,33 @@
-name: 'Hello World'
-description: 'Greet someone'
+name: 'Go Badge Generator'
+description: 'Replaces comments in readme with badges based on input.'
 inputs:
-  who-to-greet:  # id of input
+  who-to-greet: # id of input
     description: 'Who to greet'
     required: true
     default: 'World'
+  readmePath:
+    description: 'path to the readme file for update'
+    required: false
+    default: "README"
+  coverage:
+    description: 'Code coverage percentage as a floating point number (without % symbol)'
+    required: false
+  reportCard:
+    description: 'Whether or not to run go report card and include the output'
+    required: false
+    default: "true"
+  version:
+    description: 'String representation of the current code version'
+    required: false
 outputs:
-  random-number:
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
+  readme:
+    description: "Updated Readme"
 runs:
-  using: "composite"
-  steps:
-    - run: echo Hello ${{ inputs.who-to-greet }}.
-      shell: bash
-    - id: random-number-generator
-      run: echo "::set-output name=random-id::$(echo $RANDOM)"
-      shell: bash
-    - run: ${{ github.action_path }}/goodbye.sh
-      shell: bash
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.who_to_greet }}
+    - ${{ inputs.readmePath }}
+    - ${{ inputs.coverage }}
+    - ${{ inputs.reportCard }}
+    - ${{ inputs.version }}
