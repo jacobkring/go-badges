@@ -1,5 +1,6 @@
 # Container image that runs your code
-FROM golang:1.16-alpine AS build
+FROM scratch AS build
+COPY --from=golang:1.16-alpine /usr/local/go/ /usr/local/go/
 
 COPY . ./
 
