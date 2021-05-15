@@ -12,6 +12,7 @@ const devVersionFlag = "<!---dev-version-->"
 
 func main() {
 	log.Println("Generating badges...")
+	log.Println(os.Environ())
 	log.Println(os.Getenv("1"))
 	log.Println(os.Getenv("2"))
 	log.Println(os.Getenv("3"))
