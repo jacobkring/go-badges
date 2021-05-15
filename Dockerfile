@@ -6,8 +6,8 @@ WORKDIR /go/go-badges
 COPY . ./
 
 RUN go build
-RUN ls
-FROM scratch
+
+FROM golang:1.16-alpine
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY --from=build /go/go-badges /go-badges
 RUN ls
