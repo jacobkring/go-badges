@@ -1,8 +1,11 @@
 package main
 
 import (
+	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 )
 
 const badgeFlag = "<!---badges-->"
@@ -12,16 +15,21 @@ const devVersionFlag = "<!---dev-version-->"
 
 func main() {
 	log.Println("Generating badges...")
-	log.Println(os.Environ())
 	log.Println(os.Getenv("INPUT_REPORT-CARD"))
 	log.Println(os.Getenv("INPUT_VERSION"))
 	log.Println(os.Getenv("INPUT_COVERAGE"))
 	log.Println(os.Getenv("INPUT_README-PATH"))
 
-	/*
-	if len(os.Args) < 3 {
-		panic("expected coverage and report card")
+	b, err := ioutil.ReadFile("/github/workspace/README.md")
+	if err != nil {
+		log.Fatal(err)
 	}
+
+	lines := strings.Split(string(b), "\n")
+
+	fmt.Println(lines)
+
+	/*
 	coverageInput := os.Args[1]
 	reportCard := os.Args[2]
 	version := strings.Split(os.Args[3], ";")
