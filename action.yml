@@ -5,14 +5,14 @@ inputs:
     description: 'Who to greet'
     required: true
     default: 'World'
-  readmePath:
+  readme-path:
     description: 'path to the readme file for update'
     required: false
     default: "README.md"
   coverage:
     description: 'Code coverage percentage as a floating point number (without % symbol)'
     required: false
-  reportCard:
+  report-card:
     description: 'Whether or not to run go report card and include the output'
     required: false
     default: "true"
@@ -26,8 +26,8 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.who_to_greet }}
-    - ${{ inputs.readmePath }}
+    - ${{ inputs.who-to-greet }}
+    - ${{ inputs.readme-path }}
     - ${{ inputs.coverage }}
-    - ${{ inputs.reportCard }}
+    - ${{ inputs.report-card }}
     - ${{ inputs.version }}
