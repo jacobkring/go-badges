@@ -15,7 +15,7 @@ jobs:
           WITH_V: true
 
       - id: badges
-        uses: jacobkring/go-badges@${{ steps.version.outputs.tag }}
+        uses: jacobkring/go-badges@v1.0.0-rc17
         with:
           version: ${{ steps.version.outputs.tag }}
       # Use the output from the `hello` step
