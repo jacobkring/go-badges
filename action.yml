@@ -20,8 +20,8 @@ inputs:
     description: 'String representation of the current code version'
     required: false
 outputs:
-  readme:
-    description: "Updated Readme"
+  time: # id of output
+    description: 'The time we greeted you'
 runs:
   using: 'docker'
   image: 'Dockerfile'
