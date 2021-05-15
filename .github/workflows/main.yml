@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: foo
-        uses: jacobkring/go-badges@v1.0.0-rc7
+        uses: jacobkring/go-badges@v1.0.0-rc8
         with:
           who-to-greet: 'Mona the Octocat'
       # Use the output from the `hello` step
