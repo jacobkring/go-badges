@@ -43,7 +43,7 @@ jobs:
       - id: badges
         uses: jacobkring/go-badges@v1
         with:
-          readmePath: 'README' # default is README
+          readmePath: 'README.md' # default is README.md
           coverage: '90.5'
           reportCard: 'true'
 ```

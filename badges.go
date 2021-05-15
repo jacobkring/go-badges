@@ -23,7 +23,7 @@ func main() {
 	reportCard := os.Args[2]
 	version := strings.Split(os.Args[3], ";")
 
-	b, err := ioutil.ReadFile("README")
+	b, err := ioutil.ReadFile("README.md")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -91,7 +91,7 @@ func main() {
 		}
 	}
 
-	f, err := os.OpenFile("README", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	f, err := os.OpenFile("README.md", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -8,7 +8,7 @@ inputs:
   readmePath:
     description: 'path to the readme file for update'
     required: false
-    default: "README"
+    default: "README.md"
   coverage:
     description: 'Code coverage percentage as a floating point number (without % symbol)'
     required: false
