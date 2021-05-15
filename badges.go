@@ -1,13 +1,8 @@
 package main
 
 import (
-	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
-	"strconv"
-	"strings"
-	"time"
 )
 
 const badgeFlag = "<!---badges-->"
@@ -16,6 +11,9 @@ const stgVersionFlag = "<!---stg-version-->"
 const devVersionFlag = "<!---dev-version-->"
 
 func main() {
+	log.Println("Generating badges...")
+	log.Println(os.Args)
+	/*
 	if len(os.Args) < 3 {
 		panic("expected coverage and report card")
 	}
@@ -109,4 +107,5 @@ func main() {
 	}
 
 	log.Println("Success!")
+	 */
 }

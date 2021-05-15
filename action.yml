@@ -12,6 +12,7 @@ inputs:
   coverage:
     description: 'Code coverage percentage as a floating point number (without % symbol)'
     required: false
+    default: "-1"
   report-card:
     description: 'Whether or not to run go report card and include the output'
     required: false
@@ -19,6 +20,7 @@ inputs:
   version:
     description: 'String representation of the current code version'
     required: false
+    default: "-1"
 outputs:
   time: # id of output
     description: 'The time we greeted you'
