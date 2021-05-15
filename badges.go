@@ -12,7 +12,12 @@ const devVersionFlag = "<!---dev-version-->"
 
 func main() {
 	log.Println("Generating badges...")
-	log.Println(os.Args)
+	log.Println(os.Getenv("1"))
+	log.Println(os.Getenv("2"))
+	log.Println(os.Getenv("3"))
+	log.Println(os.Getenv("4"))
+	log.Println(os.Getenv("5"))
+
 	/*
 	if len(os.Args) < 3 {
 		panic("expected coverage and report card")
