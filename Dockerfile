@@ -12,4 +12,4 @@ FROM golang:1.16-alpine
 COPY --from=build /go/go-badges /go-badges
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["go-badges"]
+ENTRYPOINT ["./go-badges"]
