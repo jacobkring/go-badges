@@ -14,7 +14,7 @@ jobs:
           go-version: 1.16.x
 
       - name: Go Report Card
-        id: reportCard
+        id: goreportcard
         run: |
           go get -u github.com/client9/misspell/cmd/misspell
           git clone https://github.com/gojp/goreportcard.git
@@ -22,9 +22,8 @@ jobs:
           make install
           go install ./cmd/goreportcard-cli
           cd .. && rm -rf goreportcard
-          reportCard=`goreportcard-cli -t 85.0`
-          echo "reportCard: $reportCard"
-          echo "::set-output name=reportCard::${reportCard}"
+          output=`goreportcard-cli -t 85.0`
+          echo "::set-output name=reportCard::${output}"
 
       - name: 'Run Tests'
         run: |
@@ -54,8 +53,8 @@ jobs:
           DEFAULT_BUMP: "none"
 
       - id: badges
-        uses: jacobkring/go-badges@v1.10.2
+        uses: jacobkring/go-badges@v1.10.3
         with:
           version: ${{ steps.version.outputs.tag }}
-          report-card: ${{ steps.reportCard.outputs.reportCard }}
+          report-card: ${{ steps.goreportcard.outputs.reportCard }}
           coverage: ${{ steps.coverage.outputs.coverage }}
