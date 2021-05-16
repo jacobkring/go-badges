@@ -18,8 +18,8 @@ jobs:
           cd goreportcard
           make install
           go install ./cmd/goreportcard-cli
-          cd .. && goreportcard-cli -t 85.0
           rm -rf goreportcard
+          cd .. && goreportcard-cli -t 85.0
           reportCard=`goreportcard-cli`
           echo $reportCard
           echo "::set-output name=reportCard::${reportCard}"
