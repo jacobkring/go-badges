@@ -7,9 +7,7 @@ Go Badges is a simple docker action intended to be used in Github Actions for Go
 <br/>![](https://badgen.net/badge/license/MIT/blue) <br/>
 #### Go Report Card
 ![](https://badgen.net/badge/Report%20Card/A+%20(94.1%25)/green) <!---go-badges-report-card-->
-```
-Grade: A+ (94.1%)
-```
+
 ## Motivation
 
 I contribute to a number of private Golang repos that make it inconvenient or impossible to use 3rd party tools for things like goreportcard.com and generating badges.
