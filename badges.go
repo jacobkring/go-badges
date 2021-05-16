@@ -47,11 +47,12 @@ func main() {
 	reportCardBadge := "![](https://badgen.net/badge/Report%20Card/"
 	var reportCardResults []string
 	if runReportCard {
-		cmd, err := exec.Command("/bin/sh", "reportcard.sh").Output()
+		cmd := exec.Command("/bin/sh", "reportcard.sh")
+		out, err := cmd.Output()
 		if err != nil {
 			log.Fatalf("error %s", err)
 		}
-		output := string(cmd)
+		output := string(out)
 		log.Println("command output", output)
 		reportCard := os.Getenv("reportCard")
 		log.Println("reportCard", reportCard)
