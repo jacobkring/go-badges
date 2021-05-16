@@ -3,7 +3,7 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: Test and Bump Version
     steps:
       - uses: actions/checkout@v2
 
@@ -15,8 +15,9 @@ jobs:
           cd goreportcard
           make install
           go install ./cmd/goreportcard-cli
-          cd .. && rm -rf goreportcard
-          reportCard=`goreportcard-cli -t 85.0`
+          cd .. && goreportcard-cli -t 85.0
+          rm -rf goreportcard
+          reportCard=`goreportcard-cli`
           echo $reportCard
           echo "::set-output name=reportCard::${reportCard}"
 
@@ -30,7 +31,7 @@ jobs:
           DEFAULT_BUMP: "none"
 
       - id: badges
-        uses: jacobkring/go-badges@v1.9.12
+        uses: jacobkring/go-badges@v1.9.13
         with:
           version: ${{ steps.version.outputs.tag }}
           report-card: ${{ steps.reportCard.outputs.reportCard }}
