@@ -1,7 +1,6 @@
 name: 'Go Badge Generator'
 description: 'Replaces comments in readme with badges based on input.'
 inputs:
-  GITHUB_TOKEN:
   readme-path:
     description: 'path to the readme file for update'
     required: false
