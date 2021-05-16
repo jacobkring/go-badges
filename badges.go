@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 )
+
 const coverageFlag = "<!---go-badges-coverage-->"
 const reportCardFlag = "<!---go-badges-report-card-->"
 const versionFlag = "<!---go-badges-version-->"
