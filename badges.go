@@ -100,32 +100,30 @@ func main() {
 			lines[i] = fmt.Sprintf("%s %s", reportCardBadge, reportCardFlag)
 			i += 1
 			line = lines[i]
-			for startReportCard < len(reportCardResults) {
-				if len(lines) > i && strings.Contains(lines[i], "```") {
-					// then it seems like we already have a generated badges report card
-					lines[i] = "```"
+
+			if strings.Contains(lines[i], "```") {
+				// then it seems like we already have a generated badges report card
+				lines[i] = "```"
+				i += 1
+				for startReportCard < len(reportCardResults) {
+					lines[i] = reportCardResults[startReportCard]
+					startReportCard += 1
 					i += 1
-					for startReportCard < len(reportCardResults) {
-						lines[i] = reportCardResults[startReportCard]
-						startReportCard += 1
-						i += 1
-					}
-					lines[i] = "```"
-				} else {
-					// seems like we haven't generated a report card yet
-					lines = append(lines[:i+1], lines[i:]...)
-					lines[i] = "```"
-					i += 1
-					for startReportCard < len(reportCardResults) {
-						lines = append(lines[:i+1], lines[i:]...)
-						lines[i] = reportCardResults[startReportCard]
-						startReportCard += 1
-						i += 1
-					}
-					lines = append(lines[:i+1], lines[i:]...)
-					lines[i] = "```"
 				}
-				startReportCard += 1
+				lines[i] = "```"
+			} else {
+				// seems like we haven't generated a report card yet
+				lines = append(lines[:i+1], lines[i:]...)
+				lines[i] = "```"
+				i += 1
+				for startReportCard < len(reportCardResults) {
+					lines = append(lines[:i+1], lines[i:]...)
+					lines[i] = reportCardResults[startReportCard]
+					startReportCard += 1
+					i += 1
+				}
+				lines = append(lines[:i+1], lines[i:]...)
+				lines[i] = "```"
 			}
 		}
 		i += 1
