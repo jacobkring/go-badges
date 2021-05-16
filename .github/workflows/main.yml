@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Bump version and push tag
-        uses: anothrNick/github-tag-action@1.34.0
+        uses: anothrNick/github-tag-action@1.35.0
         id: version
         env:
           RELEASE_BRANCHES: main
