@@ -15,7 +15,7 @@ jobs:
           WITH_V: true
           DEFAULT_BUMP: "none"
       - id: badges
-        uses: jacobkring/go-badges@v1.9.0
+        uses: jacobkring/go-badges@v1.9.2
         with:
           version: ${{ steps.version.outputs.tag }}
           commit-msg: 'go-badges update'
