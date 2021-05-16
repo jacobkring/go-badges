@@ -5,7 +5,8 @@ Go Badges is a simple docker action intended to be used in Github Actions for Go
 ![](https://badgen.net/badge/license/MIT/blue)
 ![](https://badgen.net/badge/release/v1.9.27/blue) <!---go-badges-version--> *_Released on 2021-05-16 5:15:50 AM UTC_"
 <br/>
-![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green) ![](https://badgen.net/badge/coverage/-1%25/green) <!---go-badges-coverage-->
+![](https://badgen.net/badge/coverage/-1%25/green) <!---go-badges-coverage-->
+<br/>
 ![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green) <!---go-badges-report-card-->
 
 ## Motivation
