@@ -12,7 +12,6 @@ inputs:
   report-card:
     description: 'Whether or not to run go report card and include the output'
     required: false
-    default: "true"
   version:
     description: 'String representation of the current code version'
     required: false

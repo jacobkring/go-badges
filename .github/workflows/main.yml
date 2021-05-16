@@ -6,6 +6,20 @@ jobs:
     name: A job to say hello
     steps:
       - uses: actions/checkout@v2
+
+      - name: Go Report Card
+        id: reportCard
+        run: |
+          go get -u github.com/client9/misspell/cmd/misspell
+          git clone https://github.com/gojp/goreportcard.git
+          cd goreportcard
+          make install
+          go install ./cmd/goreportcard-cli
+          cd .. && rm -rf goreportcard
+          reportCard=`goreportcard-cli -t 85.0`
+          echo $reportCard
+          echo "::set-output name=reportCard::${reportCard}"
+
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.35.0
         id: version
@@ -14,8 +28,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: "none"
+
       - id: badges
         uses: jacobkring/go-badges@v1.9.12
         with:
           version: ${{ steps.version.outputs.tag }}
-          commit-msg: 'go-badges update'
+          report-card: ${{ steps.reportCard.outputs.reportCard }}

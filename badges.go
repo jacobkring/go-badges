@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
 	"time"
@@ -16,7 +15,7 @@ const versionFlag = "<!---dev-version-->"
 
 func main() {
 	log.Println("Generating badges...")
-	runReportCard := os.Getenv("INPUT_REPORT-CARD") == "true"
+	reportCard := os.Getenv("INPUT_REPORT-CARD")
 	versionInput := os.Getenv("INPUT_VERSION")
 	coverageInput := os.Getenv("INPUT_COVERAGE")
 	readmePath := os.Getenv("INPUT_README-PATH")
@@ -46,16 +45,7 @@ func main() {
 
 	reportCardBadge := "![](https://badgen.net/badge/Report%20Card/"
 	var reportCardResults []string
-	if runReportCard {
-		cmd := exec.Command("/bin/sh", "reportcard.sh")
-		out, err := cmd.Output()
-		if err != nil {
-			log.Fatalf("error %s", err)
-		}
-		output := string(out)
-		log.Println("command output", output)
-		reportCard := os.Getenv("reportCard")
-		log.Println("reportCard", reportCard)
+	if reportCard != "" {
 		reportCardResults = strings.Split(reportCard, "\n")
 		reportCardGrade := strings.ReplaceAll(strings.ReplaceAll(strings.Split(reportCardResults[0], ": ")[1], "%", "%25"), " ", "%20")
 		reportCardBadge = reportCardBadge + reportCardGrade
