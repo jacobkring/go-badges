@@ -15,7 +15,24 @@ const coverageFlag = "<!---go-badges-coverage-->"
 const reportCardFlag = "<!---go-badges-report-card-->"
 const versionFlag = "<!---go-badges-version-->"
 
+func isGoBadges() bool {
+	return os.Getenv("IS_GO_BADGES") == "true"
+}
+
+func maxedBadges(counts map[string]int, badge string) bool {
+	if isGoBadges() {
+		return counts[badge] == 1
+	} else {
+		return false
+	}
+}
+
 func main() {
+	counts := map[string]int{
+		"coverage": 0,
+		"reportCard": 0,
+		"version": 0,
+	}
 	log.Println("Generating badges...")
 	reportCard := os.Getenv("INPUT_REPORT-CARD")
 	versionInput := os.Getenv("INPUT_VERSION")
@@ -63,19 +80,18 @@ func main() {
 
 	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/%s%s", versionInput, "/blue)")
 
-	startReportCard := 11
+	startReportCard := -2
 	for i, line := range lines {
-		startReportCard += 1
-		if strings.Contains(line, versionFlag) && versionBadge != "" {
+		if strings.Contains(line, versionFlag) && versionBadge != "" && !maxedBadges(counts, "version") {
 			lines[i] = fmt.Sprintf("%s %s *_Released on %s_\"", versionBadge, versionFlag, time.Now().Format("2006-01-02 3:4:5 PM MST"))
+			counts["version"] += 1
 		}
-		if strings.Contains(line, coverageFlag) {
+		if strings.Contains(line, coverageFlag) && !maxedBadges(counts, "coverage") {
 			lines[i] = fmt.Sprintf("%s %s %s", reportCardBadge, coverageBadge, coverageFlag)
-		}
-		if strings.Contains(line, reportCardFlag) {
-			startReportCard = -1
+			counts["coverage"] += 1
 		}
 		if reportCardResults != nil && startReportCard >= 0 && startReportCard < len(reportCardResults) {
+			fmt.Println(i, startReportCard, reportCardResults[startReportCard])
 			if len(lines) > i && strings.Contains(lines[i], strings.Split(reportCardResults[startReportCard], ":")[0]) {
 				lines[i] = reportCardResults[startReportCard]
 			} else {
@@ -83,6 +99,20 @@ func main() {
 				lines[i] = reportCardResults[startReportCard]
 			}
 			startReportCard += 1
+		}
+
+		if strings.Contains(line, reportCardFlag) && !maxedBadges(counts, "reportCard") {
+			startReportCard = -1
+		}
+
+		if startReportCard < len(reportCardResults) || startReportCard == -1  {
+			if len(lines) > i && strings.Contains(lines[i], "```") {
+				lines[i] = "```"
+			} else {
+				lines = append(lines[:i+1], lines[i:]...)
+				lines[i] = "```"
+			}
+			counts["reportCard"] += 1
 		}
 	}
 
