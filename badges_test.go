@@ -6,10 +6,10 @@ import (
 )
 
 func TestCoverageBadge(t *testing.T) {
-	coverageBadge, err := CoverageBadge("googly")
+	_, err := CoverageBadge("googly")
 	assert.NotNil(t, err)
 	assert.Equal(t, "strconv.ParseFloat: parsing \"googly\": invalid syntax", err.Error())
-	coverageBadge, err = CoverageBadge("90")
+	coverageBadge, err := CoverageBadge("90")
 	assert.Nil(t, err)
 	assert.Equal(t, "![](https://badgen.net/badge/coverage/90%25/green)", coverageBadge)
 	coverageBadge, err = CoverageBadge("75")
