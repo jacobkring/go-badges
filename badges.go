@@ -15,7 +15,7 @@ const reportCardFlag = "<!---go-badges-report-card-->"
 const versionFlag = "<!---go-badges-version-->"
 
 func isGoBadges() bool {
-	return os.Getenv("IS_GO_BADGES") == "true"
+	return os.Getenv("INPUT_IS_GO_BADGES") == "true"
 }
 
 func maxedBadges(counts map[string]int, badge string) bool {
@@ -79,7 +79,7 @@ func modifyLines(lines []string, reportCardResults []string, versionBadge string
 		} else if strings.Contains(line, coverageFlag) && !maxedBadges(counts, "coverage") {
 			newLines = append(newLines, fmt.Sprintf("%s %s", cBadge, coverageFlag))
 			counts["coverage"] += 1
-		} else if reportCardResults != nil && strings.Contains(line, reportCardFlag) {
+		} else if reportCardResults != nil && strings.Contains(line, reportCardFlag) && !maxedBadges(counts, "reportCard") {
 			reportCardSlice := append([]string{fmt.Sprintf("%s %s", rcBadge, reportCardFlag), "```"}, reportCardResults...)
 			reportCardSlice = append(reportCardSlice, "```")
 			if len(lines) > i+1 && strings.Contains(lines[i+1], "```") && strings.Contains(lines[i+2], "Grade") {

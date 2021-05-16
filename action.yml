@@ -20,6 +20,10 @@ inputs:
     description: 'message to include in the readme commit'
     required: false
     default: 'go-badges update'
+  IS_GO_BADGES:
+    description: 'flag for go badges to not mess up examples'
+    required: false
+    default: "false"
 outputs:
   readme: # id of output
     description: 'The updated readme'
@@ -32,3 +36,4 @@ runs:
     - ${{ inputs.report-card }}
     - ${{ inputs.version }}
     - ${{ inputs.commit-msg }}
+    - ${{ inputs.IS_GO_BADGES }}
