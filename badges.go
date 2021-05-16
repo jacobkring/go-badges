@@ -21,7 +21,7 @@ func main() {
 	coverageInput := os.Getenv("INPUT_COVERAGE")
 	readmePath := os.Getenv("INPUT_README-PATH")
 
-	b, err := ioutil.ReadFile("/github/workspace/" + readmePath)
+	b, err := ioutil.ReadFile("/github/workspace" + readmePath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -83,7 +83,7 @@ func main() {
 		}
 	}
 
-	f, err := os.OpenFile("README.md", os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+	f, err := os.OpenFile("/github/workspace"+readmePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
