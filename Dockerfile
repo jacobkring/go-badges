@@ -6,11 +6,11 @@ WORKDIR /go/go-badges
 RUN apk update
 RUN apk add git
 
-RUN git clone https://github.com/gojp/goreportcard.git \
-    cd goreportcard \
-    make install \
-    go install ./cmd/goreportcard-cli \
-    goreportcard-cli \
+RUN git clone https://github.com/gojp/goreportcard.git && \
+    cd goreportcard && \
+    make install && \
+    go install ./cmd/goreportcard-cli && \
+    goreportcard-cli && \
     cd ..
 
 COPY . ./
