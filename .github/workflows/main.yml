@@ -1,6 +1,6 @@
 on: [push]
 env:
-  COVERAGE_REQUIREMENT: 10
+  COVERAGE_REQUIREMENT: 80
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
           DEFAULT_BUMP: "none"
 
       - id: badges
-        uses: jacobkring/go-badges@v1.9.32
+        uses: jacobkring/go-badges@v1.10
         with:
           version: ${{ steps.version.outputs.tag }}
           report-card: "${{ steps.reportCard.outputs.reportCard }}"

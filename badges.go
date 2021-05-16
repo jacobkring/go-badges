@@ -8,7 +8,6 @@ import (
 	"os/exec"
 	"strconv"
 	"strings"
-	"time"
 )
 
 const coverageFlag = "<!---go-badges-coverage-->"
@@ -16,19 +15,17 @@ const reportCardFlag = "<!---go-badges-report-card-->"
 const versionFlag = "<!---go-badges-version-->"
 
 func isGoBadges() bool {
-	fmt.Println(os.Getenv("IS_GO_BADGES"))
 	return os.Getenv("IS_GO_BADGES") == "true"
 }
 
 func maxedBadges(counts map[string]int, badge string) bool {
-	fmt.Println(counts[badge] == 1)
 	if isGoBadges() {
 		return counts[badge] == 1
-	} else {
-		return false
 	}
+	return false
 }
 
+// CoverageBadge generates a badge with the given coverage percentage (without the % symbol)
 func CoverageBadge(coverageInput string) (string, error) {
 	coverageBadge := fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/green)"
 
@@ -46,30 +43,7 @@ func CoverageBadge(coverageInput string) (string, error) {
 	return coverageBadge, err
 }
 
-func main() {
-	counts := map[string]int{
-		"coverage":   0,
-		"reportCard": 0,
-		"version":    0,
-	}
-	log.Println("Generating badges...")
-	reportCard := os.Getenv("INPUT_REPORT-CARD")
-	versionInput := os.Getenv("INPUT_VERSION")
-	coverageInput := os.Getenv("INPUT_COVERAGE")
-	readmePath := os.Getenv("INPUT_README-PATH")
-
-	b, err := ioutil.ReadFile("/github/workspace" + readmePath)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	lines := strings.Split(string(b), "\n")
-
-	coverageBadge, err := CoverageBadge(coverageInput)
-	if err != nil {
-		log.Fatal(err)
-	}
-
+func ReportCardBadge(reportCard string) (string, []string) {
 	reportCardBadge := "![](https://badgen.net/badge/Report%20Card/"
 	var reportCardResults []string
 	if reportCard != "" {
@@ -86,55 +60,70 @@ func main() {
 			reportCardBadge = reportCardBadge + "/red)"
 		}
 	}
+	return reportCardBadge, reportCardResults
+}
 
-	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/release/%s%s", versionInput, "/blue)")
+func ModifyLines(lines []string, reportCardResults []string, versionBadge string, coverageBadge string, reportCardBadge string) []string {
+	counts := map[string]int{
+		"coverage":   0,
+		"reportCard": 0,
+		"version":    0,
+	}
 
 	i := 0
+	var newLines []string
 	for i < len(lines) {
 		line := lines[i]
 		if strings.Contains(line, versionFlag) && versionBadge != "" && !maxedBadges(counts, "version") {
-			lines[i] = fmt.Sprintf("%s %s *_Released on %s_\"", versionBadge, versionFlag, time.Now().Format("2006-01-02 3:4:5 PM MST"))
+			newLines = append(newLines, fmt.Sprintf("%s %s", versionBadge, versionFlag))
 			counts["version"] += 1
-		}
-		if strings.Contains(line, coverageFlag) && !maxedBadges(counts, "coverage") {
-			lines[i] = fmt.Sprintf("%s %s", coverageBadge, coverageFlag)
+		} else if strings.Contains(line, coverageFlag) && !maxedBadges(counts, "coverage") {
+			newLines = append(newLines, fmt.Sprintf("%s %s", coverageBadge, coverageFlag))
 			counts["coverage"] += 1
-		}
-		if reportCardResults != nil && strings.Contains(line, reportCardFlag) {
-			startReportCard := 0
-			lines[i] = fmt.Sprintf("%s %s", reportCardBadge, reportCardFlag)
-			i += 1
-			line = lines[i]
-
-			if strings.Contains(lines[i], "```") {
-				// then it seems like we already have a generated badges report card
-				lines[i] = "```"
-				i += 1
-				for startReportCard < len(reportCardResults) {
-					lines[i] = reportCardResults[startReportCard]
-					startReportCard += 1
-					i += 1
-				}
-				lines[i] = "```"
-			} else {
-				// seems like we haven't generated a report card yet
-				lines = append(lines[:i+1], lines[i:]...)
-				lines[i] = "```"
-				i += 1
-				for startReportCard < len(reportCardResults) {
-					lines = append(lines[:i+1], lines[i:]...)
-					lines[i] = reportCardResults[startReportCard]
-					startReportCard += 1
-					i += 1
-				}
-				lines = append(lines[:i+1], lines[i:]...)
-				lines[i] = "```"
+		} else if reportCardResults != nil && strings.Contains(line, reportCardFlag) {
+			reportCardSlice := append([]string{fmt.Sprintf("%s %s", reportCardBadge, reportCardFlag), "```"}, reportCardResults...)
+			reportCardSlice = append(reportCardSlice, "```")
+			if len(lines) > i+1 && strings.Contains(lines[i+1], "```") && strings.Contains(lines[i+2], "Grade") {
+				i += 12
 			}
+			newLines = append(newLines, reportCardSlice...)
+			counts["reportCard"] += 1
+		} else {
+			newLines = append(newLines, line)
 		}
 		i += 1
 	}
+	return newLines
+}
 
-	f, err := os.OpenFile("/github/workspace"+readmePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+var readmeBasePath = "/github/workspace"
+
+func main() {
+	log.Println("Generating badges...")
+	reportCard := os.Getenv("INPUT_REPORT-CARD")
+	versionInput := os.Getenv("INPUT_VERSION")
+	coverageInput := os.Getenv("INPUT_COVERAGE")
+	readmePath := os.Getenv("INPUT_README-PATH")
+
+	b, err := ioutil.ReadFile(readmeBasePath + readmePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	lines := strings.Split(string(b), "\n")
+
+	coverageBadge, err := CoverageBadge(coverageInput)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	reportCardBadge, reportCardResults := ReportCardBadge(reportCard)
+
+	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/release/%s%s", versionInput, "/blue)")
+
+	lines = ModifyLines(lines, reportCardResults, versionBadge, coverageBadge, reportCardBadge)
+
+	f, err := os.OpenFile(readmeBasePath+readmePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
