@@ -38,6 +38,7 @@ they will be generated after the first run.
 ```
 ![](https://badgen.net/badge/Report%20Card/A+%20(94.1%25)/green) <!---go-badges-report-card-->
 ```
+```
 Grade: A+ (94.1%)
 Files: 2
 Issues: 1
@@ -49,6 +50,31 @@ license: 100%
 ineffassign: 100%
 misspell: 100%
 ```
+
+#### Workflow
+
+In your workflow file you should include the inputs you want generated.
+```
+on: [push]
+
+jobs:
+  go_badges:
+    runs-on: ubuntu-latest
+    name: A job to generate badges
+    steps:
+      - uses: actions/checkout@v2
+      - id: badges
+        uses: jacobkring/go-badges@v1
+        with:
+          version: ${{ steps.version.outputs.tag }}
+          report-card: ${{ steps.goreportcard.outputs.reportCard }}
+          coverage: ${{ steps.coverage.outputs.coverage }}
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
