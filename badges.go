@@ -25,45 +25,44 @@ func maxedBadges(counts map[string]int, badge string) bool {
 	return false
 }
 
-// CoverageBadge generates a badge with the given coverage percentage (without the % symbol)
-func CoverageBadge(coverageInput string) (string, error) {
-	coverageBadge := fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/green)"
+func coverageBadge(coverageInput string) (string, error) {
+	cBadge := fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/green)"
 
 	coverage, err := strconv.ParseFloat(coverageInput, 64)
 	if err != nil {
-		return coverageBadge, err
+		return cBadge, err
 	}
 	if coverage < 80 && coverage >= 70 {
-		coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/yellow)"
+		cBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/yellow)"
 	} else if coverage < 70 && coverage >= 60 {
-		coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/orange)"
+		cBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/orange)"
 	} else if coverage < 60 {
-		coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/red)"
+		cBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/red)"
 	}
-	return coverageBadge, err
+	return cBadge, err
 }
 
-func ReportCardBadge(reportCard string) (string, []string) {
-	reportCardBadge := "![](https://badgen.net/badge/Report%20Card/"
+func reportCardBadge(reportCard string) (string, []string) {
+	rcBadge := "![](https://badgen.net/badge/Report%20Card/"
 	var reportCardResults []string
 	if reportCard != "" {
 		reportCardResults = strings.Split(reportCard, "\n")
 		reportCardGrade := strings.ReplaceAll(strings.ReplaceAll(strings.Split(reportCardResults[0], ": ")[1], "%", "%25"), " ", "%20")
-		reportCardBadge = reportCardBadge + reportCardGrade
+		rcBadge = rcBadge + reportCardGrade
 		if strings.Contains(reportCard, "A") {
-			reportCardBadge = reportCardBadge + "/green)"
+			rcBadge = rcBadge + "/green)"
 		} else if strings.Contains(reportCard, "B") {
-			reportCardBadge = reportCardBadge + "/yellow)"
+			rcBadge = rcBadge + "/yellow)"
 		} else if strings.Contains(reportCard, "C") {
-			reportCardBadge = reportCardBadge + "/orange)"
+			rcBadge = rcBadge + "/orange)"
 		} else {
-			reportCardBadge = reportCardBadge + "/red)"
+			rcBadge = rcBadge + "/red)"
 		}
 	}
-	return reportCardBadge, reportCardResults
+	return rcBadge, reportCardResults
 }
 
-func ModifyLines(lines []string, reportCardResults []string, versionBadge string, coverageBadge string, reportCardBadge string) []string {
+func modifyLines(lines []string, reportCardResults []string, versionBadge string, cBadge string, rcBadge string) []string {
 	counts := map[string]int{
 		"coverage":   0,
 		"reportCard": 0,
@@ -78,10 +77,10 @@ func ModifyLines(lines []string, reportCardResults []string, versionBadge string
 			newLines = append(newLines, fmt.Sprintf("%s %s", versionBadge, versionFlag))
 			counts["version"] += 1
 		} else if strings.Contains(line, coverageFlag) && !maxedBadges(counts, "coverage") {
-			newLines = append(newLines, fmt.Sprintf("%s %s", coverageBadge, coverageFlag))
+			newLines = append(newLines, fmt.Sprintf("%s %s", cBadge, coverageFlag))
 			counts["coverage"] += 1
 		} else if reportCardResults != nil && strings.Contains(line, reportCardFlag) {
-			reportCardSlice := append([]string{fmt.Sprintf("%s %s", reportCardBadge, reportCardFlag), "```"}, reportCardResults...)
+			reportCardSlice := append([]string{fmt.Sprintf("%s %s", rcBadge, reportCardFlag), "```"}, reportCardResults...)
 			reportCardSlice = append(reportCardSlice, "```")
 			if len(lines) > i+1 && strings.Contains(lines[i+1], "```") && strings.Contains(lines[i+2], "Grade") {
 				i += 12
@@ -114,16 +113,16 @@ func main() {
 
 	lines := strings.Split(string(b), "\n")
 
-	coverageBadge, err := CoverageBadge(coverageInput)
+	cBadge, err := coverageBadge(coverageInput)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	reportCardBadge, reportCardResults := ReportCardBadge(reportCard)
+	rcBadge, reportCardResults := reportCardBadge(reportCard)
 
 	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/release/%s%s", versionInput, "/blue)")
 
-	lines = ModifyLines(lines, reportCardResults, versionBadge, coverageBadge, reportCardBadge)
+	lines = modifyLines(lines, reportCardResults, versionBadge, cBadge, rcBadge)
 
 	f, err := os.OpenFile(readmeBasePath+readmePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
