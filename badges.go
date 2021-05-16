@@ -29,6 +29,23 @@ func maxedBadges(counts map[string]int, badge string) bool {
 	}
 }
 
+func CoverageBadge(coverageInput string) (string, error) {
+	coverageBadge := fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/green)"
+
+	coverage, err := strconv.ParseFloat(coverageInput, 64)
+	if err != nil {
+		return coverageBadge, err
+	}
+	if coverage < 80 && coverage >= 70 {
+		coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/yellow)"
+	} else if coverage < 70 && coverage >= 60 {
+		coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/orange)"
+	} else if coverage < 60 {
+		coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/red)"
+	}
+	return coverageBadge, err
+}
+
 func main() {
 	counts := map[string]int{
 		"coverage":   0,
@@ -48,26 +65,14 @@ func main() {
 
 	lines := strings.Split(string(b), "\n")
 
-	coverageBadge := fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/green)"
-	if coverageInput != "-1" {
-		coverage, err := strconv.ParseFloat(coverageInput, 64)
-		if err != nil {
-			return
-		}
-		if coverage < 80 && coverage >= 70 {
-			coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/yellow)"
-		} else if coverage < 70 && coverage >= 60 {
-			coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/yellow)"
-		} else if coverage < 60 {
-			coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/red)"
-		}
+	coverageBadge, err := CoverageBadge(coverageInput)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	reportCardBadge := "![](https://badgen.net/badge/Report%20Card/"
 	var reportCardResults []string
 	if reportCard != "" {
-		fmt.Println(reportCard)
-		fmt.Println(reportCard)
 		reportCardResults = strings.Split(reportCard, "\n")
 		reportCardGrade := strings.ReplaceAll(strings.ReplaceAll(strings.Split(reportCardResults[0], ": ")[1], "%", "%25"), " ", "%20")
 		reportCardBadge = reportCardBadge + reportCardGrade
@@ -150,12 +155,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	cmd, err := exec.Command("/bin/sh", "commit.sh").Output()
+	_, err = exec.Command("/bin/sh", "commit.sh").Output()
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	log.Println(string(cmd))
 
 	log.Println("Success! README.md badge changes were committed to the repo.")
 }
