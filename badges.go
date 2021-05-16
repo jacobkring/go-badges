@@ -16,10 +16,12 @@ const reportCardFlag = "<!---go-badges-report-card-->"
 const versionFlag = "<!---go-badges-version-->"
 
 func isGoBadges() bool {
+	fmt.Println(os.Getenv("IS_GO_BADGES"))
 	return os.Getenv("IS_GO_BADGES") == "true"
 }
 
 func maxedBadges(counts map[string]int, badge string) bool {
+	fmt.Println(counts[badge] == 1)
 	if isGoBadges() {
 		return counts[badge] == 1
 	} else {
@@ -64,6 +66,8 @@ func main() {
 	reportCardBadge := "![](https://badgen.net/badge/Report%20Card/"
 	var reportCardResults []string
 	if reportCard != "" {
+		fmt.Println(reportCard)
+		fmt.Println(reportCard)
 		reportCardResults = strings.Split(reportCard, "\n")
 		reportCardGrade := strings.ReplaceAll(strings.ReplaceAll(strings.Split(reportCardResults[0], ": ")[1], "%", "%25"), " ", "%20")
 		reportCardBadge = reportCardBadge + reportCardGrade
@@ -78,7 +82,7 @@ func main() {
 		}
 	}
 
-	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/%s%s", versionInput, "/blue)")
+	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/release/%s%s", versionInput, "/blue)")
 
 	i := 0
 	for i < len(lines) {
@@ -88,7 +92,7 @@ func main() {
 			counts["version"] += 1
 		}
 		if strings.Contains(line, coverageFlag) && !maxedBadges(counts, "coverage") {
-			lines[i] = fmt.Sprintf("%s %s %s", reportCardBadge, coverageBadge, coverageFlag)
+			lines[i] = fmt.Sprintf("%s %s", coverageBadge, coverageFlag)
 			counts["coverage"] += 1
 		}
 		if reportCardResults != nil && strings.Contains(line, reportCardFlag) {
