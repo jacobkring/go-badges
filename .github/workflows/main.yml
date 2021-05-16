@@ -58,6 +58,6 @@ jobs:
       - id: badges
         uses: jacobkring/go-badges@v1.10.4
         with:
-          version: ${{ steps.version.outputs.tag }}
+          version: v1.10.4
           report-card: ${{ steps.goreportcard.outputs.reportCard }}
           coverage: ${{ steps.coverage.outputs.coverage }}
