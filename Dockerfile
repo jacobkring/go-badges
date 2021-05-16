@@ -4,7 +4,7 @@ FROM golang:1.16-alpine AS build
 WORKDIR /go/go-badges
 
 RUN apk update
-RUN apk add git
+RUN apk add git make
 
 RUN git clone https://github.com/gojp/goreportcard.git && \
     cd goreportcard && \
