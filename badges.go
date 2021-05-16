@@ -100,7 +100,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	cmd, err := exec.Command("/bin/bash", "commit.sh").Output()
+	cmd, err := exec.Command("/bin/sh", "commit.sh").Output()
 	if err != nil {
 		log.Fatal(err)
 	}
