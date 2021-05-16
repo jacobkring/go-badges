@@ -103,7 +103,6 @@ func main() {
 
 		if strings.Contains(line, reportCardFlag) && !maxedBadges(counts, "reportCard") {
 			startReportCard = -1
-			startReportCard += 1
 		}
 
 		if startReportCard < len(reportCardResults) || startReportCard == -1 {
@@ -114,6 +113,7 @@ func main() {
 				lines[i] = "```"
 			}
 			counts["reportCard"] += 1
+			startReportCard += 1
 		}
 	}
 
