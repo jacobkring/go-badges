@@ -80,9 +80,9 @@ func main() {
 
 	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/%s%s", versionInput, "/blue)")
 
-	i := 0
-	startReportCard := -2
+	i := -1
 	for i < len(lines) {
+		i += 1
 		line := lines[i]
 		if strings.Contains(line, versionFlag) && versionBadge != "" && !maxedBadges(counts, "version") {
 			lines[i] = fmt.Sprintf("%s %s *_Released on %s_\"", versionBadge, versionFlag, time.Now().Format("2006-01-02 3:4:5 PM MST"))
@@ -92,32 +92,36 @@ func main() {
 			lines[i] = fmt.Sprintf("%s %s %s", reportCardBadge, coverageBadge, coverageFlag)
 			counts["coverage"] += 1
 		}
-		if reportCardResults != nil && startReportCard >= 0 && startReportCard < len(reportCardResults) {
-			if len(lines) > i && strings.Contains(lines[i], strings.Split(reportCardResults[startReportCard], ":")[0]) {
-				lines[i] = reportCardResults[startReportCard]
-			} else {
-				lines = append(lines[:i+1], lines[i:]...)
-				lines[i] = reportCardResults[startReportCard]
-			}
-			startReportCard += 1
-		}
-
-		if strings.Contains(line, reportCardFlag) && !maxedBadges(counts, "reportCard") {
-			startReportCard = -1
-		}
-
-		if startReportCard < len(reportCardResults) || startReportCard == -1 {
+		if reportCardResults != nil && strings.Contains(line, reportCardFlag) {
+			startReportCard := 0
+			lines[i] = fmt.Sprintf("%s %s", reportCardBadge, reportCardFlag)
+			i += 1
+			line = lines[i]
 			if len(lines) > i && strings.Contains(lines[i], "```") {
+				// then it seems like we already have a generated badges report card
+				lines[i] = "```"
+				i += 1
+				for startReportCard < len(reportCardResults) {
+					lines[i] = reportCardResults[startReportCard]
+					startReportCard += 1
+					i += 1
+				}
 				lines[i] = "```"
 			} else {
+				// seems like we haven't generated a report card yet
+				lines = append(lines[:i+1], lines[i:]...)
+				lines[i] = "```"
+				i += 1
+				for startReportCard < len(reportCardResults) {
+					lines = append(lines[:i+1], lines[i:]...)
+					lines[i] = reportCardResults[startReportCard]
+					startReportCard += 1
+					i += 1
+				}
 				lines = append(lines[:i+1], lines[i:]...)
 				lines[i] = "```"
 			}
-			counts["reportCard"] += 1
-			startReportCard += 1
 		}
-		i += 1
-		fmt.Printf("line: %s\n new line: %s\n\n", line, lines[i])
 	}
 
 	f, err := os.OpenFile("/github/workspace"+readmePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
