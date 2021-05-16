@@ -80,9 +80,8 @@ func main() {
 
 	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/%s%s", versionInput, "/blue)")
 
-	i := -1
+	i := 0
 	for i < len(lines) {
-		i += 1
 		line := lines[i]
 		if strings.Contains(line, versionFlag) && versionBadge != "" && !maxedBadges(counts, "version") {
 			lines[i] = fmt.Sprintf("%s %s *_Released on %s_\"", versionBadge, versionFlag, time.Now().Format("2006-01-02 3:4:5 PM MST"))
@@ -122,6 +121,7 @@ func main() {
 				lines[i] = "```"
 			}
 		}
+		i += 1
 	}
 
 	f, err := os.OpenFile("/github/workspace"+readmePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
