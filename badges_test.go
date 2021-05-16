@@ -10,46 +10,46 @@ import (
 )
 
 func TestCoverageBadge(t *testing.T) {
-	_, err := CoverageBadge("googly")
+	_, err := coverageBadge("googly")
 	assert.NotNil(t, err)
 	assert.Equal(t, "strconv.ParseFloat: parsing \"googly\": invalid syntax", err.Error())
-	coverageBadge, err := CoverageBadge("90")
+	cBadge, err := coverageBadge("90")
 	assert.Nil(t, err)
-	assert.Equal(t, "![](https://badgen.net/badge/coverage/90%25/green)", coverageBadge)
-	coverageBadge, err = CoverageBadge("75")
+	assert.Equal(t, "![](https://badgen.net/badge/coverage/90%25/green)", cBadge)
+	cBadge, err = coverageBadge("75")
 	assert.Nil(t, err)
-	assert.Equal(t, "![](https://badgen.net/badge/coverage/75%25/yellow)", coverageBadge)
-	coverageBadge, err = CoverageBadge("65")
+	assert.Equal(t, "![](https://badgen.net/badge/coverage/75%25/yellow)", cBadge)
+	cBadge, err = coverageBadge("65")
 	assert.Nil(t, err)
-	assert.Equal(t, "![](https://badgen.net/badge/coverage/65%25/orange)", coverageBadge)
-	coverageBadge, err = CoverageBadge("50")
+	assert.Equal(t, "![](https://badgen.net/badge/coverage/65%25/orange)", cBadge)
+	cBadge, err = coverageBadge("50")
 	assert.Nil(t, err)
-	assert.Equal(t, "![](https://badgen.net/badge/coverage/50%25/red)", coverageBadge)
+	assert.Equal(t, "![](https://badgen.net/badge/coverage/50%25/red)", cBadge)
 }
 
 func TestReportCardBadge(t *testing.T) {
 	reportCard := "Grade: A (85.3%)\nFiles: 2\nIssues: 1\ngofmt: 100%\ngo_vet: 100%\ngocyclo: 50%\ngolint: 50%\nlicense: 100%\nineffassign: 50%\nmisspell: 100%"
-	reportCardBadge, reportCardResults := ReportCardBadge(reportCard)
+	rcBadge, reportCardResults := reportCardBadge(reportCard)
 
-	assert.Equal(t, "![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green)", reportCardBadge)
+	assert.Equal(t, "![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green)", rcBadge)
 	assert.Equal(t, []string{"Grade: A (85.3%)", "Files: 2", "Issues: 1", "gofmt: 100%", "go_vet: 100%", "gocyclo: 50%", "golint: 50%", "license: 100%", "ineffassign: 50%", "misspell: 100%"}, reportCardResults)
 
 	reportCard = "Grade: B (75.3%)\nFiles: 2\nIssues: 1\ngofmt: 100%\ngo_vet: 100%\ngocyclo: 50%\ngolint: 50%\nlicense: 0%\nineffassign: 50%\nmisspell: 100%"
-	reportCardBadge, reportCardResults = ReportCardBadge(reportCard)
+	rcBadge, reportCardResults = reportCardBadge(reportCard)
 
-	assert.Equal(t, "![](https://badgen.net/badge/Report%20Card/B%20(75.3%25)/yellow)", reportCardBadge)
+	assert.Equal(t, "![](https://badgen.net/badge/Report%20Card/B%20(75.3%25)/yellow)", rcBadge)
 	assert.Equal(t, []string{"Grade: B (75.3%)", "Files: 2", "Issues: 1", "gofmt: 100%", "go_vet: 100%", "gocyclo: 50%", "golint: 50%", "license: 0%", "ineffassign: 50%", "misspell: 100%"}, reportCardResults)
 
 	reportCard = "Grade: C (75.3%)\nFiles: 2\nIssues: 1\ngofmt: 100%\ngo_vet: 100%\ngocyclo: 50%\ngolint: 50%\nlicense: 0%\nineffassign: 50%\nmisspell: 100%"
-	reportCardBadge, reportCardResults = ReportCardBadge(reportCard)
+	rcBadge, reportCardResults = reportCardBadge(reportCard)
 
-	assert.Equal(t, "![](https://badgen.net/badge/Report%20Card/C%20(75.3%25)/orange)", reportCardBadge)
+	assert.Equal(t, "![](https://badgen.net/badge/Report%20Card/C%20(75.3%25)/orange)", rcBadge)
 	assert.Equal(t, []string{"Grade: C (75.3%)", "Files: 2", "Issues: 1", "gofmt: 100%", "go_vet: 100%", "gocyclo: 50%", "golint: 50%", "license: 0%", "ineffassign: 50%", "misspell: 100%"}, reportCardResults)
 
 	reportCard = "Grade: D (15.3%)\nFiles: 2\nIssues: 1\ngofmt: 100%\ngo_vet: 100%\ngocyclo: 50%\ngolint: 50%\nlicense: 0%\nineffassign: 50%\nmisspell: 100%"
-	reportCardBadge, reportCardResults = ReportCardBadge(reportCard)
+	rcBadge, reportCardResults = reportCardBadge(reportCard)
 
-	assert.Equal(t, "![](https://badgen.net/badge/Report%20Card/D%20(15.3%25)/red)", reportCardBadge)
+	assert.Equal(t, "![](https://badgen.net/badge/Report%20Card/D%20(15.3%25)/red)", rcBadge)
 	assert.Equal(t, []string{"Grade: D (15.3%)", "Files: 2", "Issues: 1", "gofmt: 100%", "go_vet: 100%", "gocyclo: 50%", "golint: 50%", "license: 0%", "ineffassign: 50%", "misspell: 100%"}, reportCardResults)
 }
 
@@ -58,15 +58,15 @@ func TestModifyLines(t *testing.T) {
 	linesInput := []string{
 		"<!---go-badges-report-card-->",
 	}
-	reportCardBadge := "![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green)"
+	rcBadge := "![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green)"
 	reportCardResults := []string{"Grade: A (85.3%)", "Files: 2", "Issues: 1", "gofmt: 100%", "go_vet: 100%", "gocyclo: 50%", "golint: 50%", "license: 100%", "ineffassign: 50%", "misspell: 100%"}
-	output := ModifyLines(linesInput, reportCardResults, "", "", reportCardBadge)
+	output := modifyLines(linesInput, reportCardResults, "", "", rcBadge)
 	assert.Equal(t, 13, len(output))
 
 	linesInput = append(output, "<!---go-badges-coverage-->")
 
-	reportCardBadge, reportCardResults = ReportCardBadge("Grade: A (100.0%)\nFiles: 2\nIssues: 0\ngofmt: 100%\ngo_vet: 100%\ngocyclo: 100%\ngolint: 50%\nlicense: 100%\nineffassign: 100%\nmisspell: 100%")
-	output = ModifyLines(linesInput, reportCardResults, "", "![](https://badgen.net/badge/coverage/90%25/green)", reportCardBadge)
+	rcBadge, reportCardResults = reportCardBadge("Grade: A (100.0%)\nFiles: 2\nIssues: 0\ngofmt: 100%\ngo_vet: 100%\ngocyclo: 100%\ngolint: 50%\nlicense: 100%\nineffassign: 100%\nmisspell: 100%")
+	output = modifyLines(linesInput, reportCardResults, "", "![](https://badgen.net/badge/coverage/90%25/green)", rcBadge)
 	assert.Equal(t, 14, len(output))
 
 	assert.Equal(t, "![](https://badgen.net/badge/Report%20Card/A%20(100.0%25)/green) <!---go-badges-report-card-->", output[0])
@@ -89,7 +89,7 @@ func TestModifyLines(t *testing.T) {
 
 	versionBadge := "![](https://badgen.net/badge/release/v1.0.0/blue)"
 
-	output = ModifyLines(linesInput, reportCardResults, versionBadge, "![](https://badgen.net/badge/coverage/90%25/green)", reportCardBadge)
+	output = modifyLines(linesInput, reportCardResults, versionBadge, "![](https://badgen.net/badge/coverage/90%25/green)", rcBadge)
 	assert.Equal(t, 15, len(output))
 
 	assert.Equal(t, fmt.Sprintf("![](https://badgen.net/badge/release/v1.0.0/blue) <!---go-badges-version-->"), output[14])
