@@ -22,7 +22,7 @@ jobs:
           go install ./cmd/goreportcard-cli
           cd .. && rm -rf goreportcard
           goreportcard-cli -t 85.0
-          reportCard=`goreportcard-cli`
+          reportCard=`goreportcard-cli -t 85.0`
           echo $reportCard
           echo "::set-output name=reportCard::${reportCard}"
 
