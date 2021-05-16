@@ -5,6 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Test and Bump Version
     steps:
+      - uses: actions/checkout@v2
+
       - name: Install Go
         uses: actions/setup-go@v2
         with:
@@ -19,7 +21,7 @@ jobs:
           make install
           go install ./cmd/goreportcard-cli
           cd .. && rm -rf goreportcard
-           goreportcard-cli -t 85.0
+          goreportcard-cli -t 85.0
           reportCard=`goreportcard-cli`
           echo $reportCard
           echo "::set-output name=reportCard::${reportCard}"
