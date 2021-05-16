@@ -22,9 +22,8 @@ jobs:
           make install
           go install ./cmd/goreportcard-cli
           cd .. && rm -rf goreportcard
-          goreportcard-cli -t 85.0
           reportCard=`goreportcard-cli -t 85.0`
-          echo $reportCard
+          echo "reportCard: $reportCard"
           echo "::set-output name=reportCard::${reportCard}"
 
       - name: 'Run Tests'
@@ -58,5 +57,5 @@ jobs:
         uses: jacobkring/go-badges@v1.10.1
         with:
           version: ${{ steps.version.outputs.tag }}
-          report-card: "${{ steps.reportCard.outputs.reportCard }}"
+          report-card: ${{ steps.reportCard.outputs.reportCard }}
           coverage: ${{ steps.coverage.outputs.coverage }}
