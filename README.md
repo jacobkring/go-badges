@@ -7,6 +7,18 @@ Go Badges is a simple docker action intended to be used in Github Actions for Go
 <br/>![](https://badgen.net/badge/license/MIT/blue) <br/>
 #### Go Report Card
 ![](https://badgen.net/badge/Report%20Card/A+%20(94.1%25)/green) <!---go-badges-report-card-->
+```
+Grade: A+ (94.1%)
+Files: 2
+Issues: 1
+gofmt: 100%
+go_vet: 100%
+gocyclo: 100%
+golint: 50%
+license: 100%
+ineffassign: 100%
+misspell: 100%
+```
 
 ## Motivation
 
@@ -27,16 +39,16 @@ they will be generated after the first run.
 ![](https://badgen.net/badge/Report%20Card/A+%20(94.1%25)/green) <!---go-badges-report-card-->
 ```
 Grade: A+ (94.1%)
+Files: 2
+Issues: 1
+gofmt: 100%
+go_vet: 100%
+gocyclo: 100%
+golint: 50%
+license: 100%
+ineffassign: 100%
+misspell: 100%
 ```
-          readmePath: 'README.md' # default is README.md
-          coverage: '90.5'
-          reportCard: 'true'
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
