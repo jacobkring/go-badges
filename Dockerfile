@@ -14,13 +14,6 @@ WORKDIR /
 RUN apk update
 RUN apk add git make
 
-RUN git clone https://github.com/gojp/goreportcard.git && \
-    cd goreportcard && \
-    make install && \
-    go install ./cmd/goreportcard-cli && \
-    goreportcard-cli && \
-    cd ..
-
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY --from=build /go/go-badges/ .
 
