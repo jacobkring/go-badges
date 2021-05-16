@@ -3,6 +3,9 @@ FROM golang:1.16-alpine AS build
 
 WORKDIR /go/go-badges
 
+RUN apk update
+RUN apk add git
+
 COPY . ./
 
 RUN go build
