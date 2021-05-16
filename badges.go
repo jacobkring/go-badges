@@ -87,7 +87,6 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer f.Close()
 
 	err = f.Truncate(0)
 	if err != nil {
@@ -96,6 +95,11 @@ func main() {
 
 	output := strings.Join(lines, "\n")
 	_, err = fmt.Fprintf(f, "%s", output)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = f.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
