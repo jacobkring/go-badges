@@ -2,8 +2,8 @@
 
 Go Badges is a simple docker action intended to be used in Github Actions for Golang projects. Badges are generated using various inputs and comment tags in your README file.
 
-![](https://badgen.net/badge/v1.9.27/blue) <!---go-badges-version--> *_Released on 2021-05-16 5:15:50 AM UTC_"
-![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green) ![](https://badgen.net/badge/coverage/-1%25/green) <!---go-badges-coverage-->
+![](https://badgen.net/badge/release//blue) <!---go-badges-version--> *_Released on 2021-05-16 5:23:36 AM UTC_"
+![](https://badgen.net/badge/coverage/-1%25/green) <!---go-badges-coverage-->
 ![](https://badgen.net/badge/license/MIT/blue)
 ![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green) <!---go-badges-report-card-->
 ```
@@ -22,7 +22,7 @@ they will be generated after the first run.
 
 #### Coverage
 ```
-![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green) ![](https://badgen.net/badge/coverage/-1%25/green) <!---go-badges-coverage-->
+![](https://badgen.net/badge/coverage/-1%25/green) <!---go-badges-coverage-->
 ```
 #### Report Card
 ```
@@ -30,7 +30,7 @@ they will be generated after the first run.
 ```
 Grade: A (85.3%)
 ```
-![](https://badgen.net/badge/v1.9.27/blue) <!---go-badges-version--> *_Released on 2021-05-16 5:15:50 AM UTC_"
+![](https://badgen.net/badge/release//blue) <!---go-badges-version--> *_Released on 2021-05-16 5:23:36 AM UTC_"
 ```
 
 #### Workflow
