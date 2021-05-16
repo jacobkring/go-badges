@@ -55,7 +55,7 @@ jobs:
           DEFAULT_BUMP: "none"
 
       - id: badges
-        uses: jacobkring/go-badges@v1.10.0
+        uses: jacobkring/go-badges@v1.10.1
         with:
           version: ${{ steps.version.outputs.tag }}
           report-card: "${{ steps.reportCard.outputs.reportCard }}"
