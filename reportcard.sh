@@ -7,5 +7,5 @@ make install
 go install ./cmd/goreportcard-cli
 cd .. && rm -rf goreportcard
 cd /github/workspace
-reportCard=`goreportcard-cli -t $INPUT_REPORT-CARD-THRESHOLD`
+reportCard=`goreportcard-cli`
 cd ../..

@@ -1,6 +1,6 @@
 # Go Badges
 
-Go Badges is a simple composite run steps action intended to be used in Github Actions for Golang projects. Badges are generated using various inputs and comment tags in your README file.
+Go Badges is a simple docker action intended to be used in Github Actions for Golang projects. Badges are generated using various inputs and comment tags in your README file.
 
 <!---go-badges-version--> <!---go-badges-coverage-->
 <!---go-badges-report-card-->

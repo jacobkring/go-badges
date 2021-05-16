@@ -28,7 +28,7 @@ func main() {
 
 	lines := strings.Split(string(b), "\n")
 
-	fmt.Println(lines)
+	fmt.Println("Lines: \n", lines)
 	coverageBadge := fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/green)"
 	if coverageInput != "-1" {
 		coverage, err := strconv.ParseFloat(coverageInput, 64)
@@ -54,6 +54,7 @@ func main() {
 		output := string(cmd)
 		log.Println(output)
 		reportCard := os.Getenv("reportCard")
+		log.Println(reportCard)
 		reportCardResults = strings.Split(reportCard, "\n")
 		reportCardGrade := strings.ReplaceAll(strings.ReplaceAll(strings.Split(reportCardResults[0], ": ")[1], "%", "%25"), " ", "%20")
 		reportCardBadge = reportCardBadge + reportCardGrade
@@ -67,10 +68,6 @@ func main() {
 			reportCardBadge = reportCardBadge + "/red)"
 		}
 	}
-	if versionInput != "-1" {
-
-	}
-
 	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/%s%s", versionInput, "/blue)")
 
 	startReportCard := 11
