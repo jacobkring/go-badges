@@ -8,9 +8,6 @@ Go Badges is a simple docker action intended to be used in Github Actions for Go
 ![](https://badgen.net/badge/coverage/-1%25/green) <!---go-badges-coverage-->
 <br/>
 ![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green) <!---go-badges-report-card-->
-```
-Grade: A (85.3%)
-```
 
 ## Motivation
 
