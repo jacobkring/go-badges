@@ -80,8 +80,10 @@ func main() {
 
 	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/%s%s", versionInput, "/blue)")
 
+	i := 0
 	startReportCard := -2
-	for i, line := range lines {
+	for i < len(lines) {
+		line := lines[i]
 		if strings.Contains(line, versionFlag) && versionBadge != "" && !maxedBadges(counts, "version") {
 			lines[i] = fmt.Sprintf("%s %s *_Released on %s_\"", versionBadge, versionFlag, time.Now().Format("2006-01-02 3:4:5 PM MST"))
 			counts["version"] += 1
@@ -91,7 +93,6 @@ func main() {
 			counts["coverage"] += 1
 		}
 		if reportCardResults != nil && startReportCard >= 0 && startReportCard < len(reportCardResults) {
-			fmt.Println(i, startReportCard, reportCardResults[startReportCard])
 			if len(lines) > i && strings.Contains(lines[i], strings.Split(reportCardResults[startReportCard], ":")[0]) {
 				lines[i] = reportCardResults[startReportCard]
 			} else {
@@ -115,6 +116,7 @@ func main() {
 			counts["reportCard"] += 1
 			startReportCard += 1
 		}
+		i+=1
 	}
 
 	f, err := os.OpenFile("/github/workspace"+readmePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
