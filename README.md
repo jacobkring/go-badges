@@ -21,15 +21,15 @@ they will be generated after the first run.
 
 #### Coverage
 ```
-![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green) ![](https://badgen.net/badge/coverage/-1%25/green) <!---go-badges-coverage-->
+<!---go-badges-coverage-->
 ```
 #### Report Card
 ```
-![](https://badgen.net/badge/Report%20Card/A%20(85.3%25)/green) <!---go-badges-report-card-->
+<!---go-badges-report-card--> 
 ```
 Grade: A (85.3%)
 ```
-![](https://badgen.net/badge/v1.9.27/blue) <!---go-badges-version--> *_Released on 2021-05-16 5:15:50 AM UTC_"
+<!---go-badges-version-->
 ```
 
 #### Workflow

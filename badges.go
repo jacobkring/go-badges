@@ -125,6 +125,7 @@ func main() {
 					lines = append(lines[:i+1], lines[i:]...)
 					lines[i] = "```"
 				}
+				startReportCard += 1
 			}
 		}
 		i += 1
