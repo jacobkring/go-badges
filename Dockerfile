@@ -6,6 +6,13 @@ WORKDIR /go/go-badges
 RUN apk update
 RUN apk add git
 
+RUN git clone https://github.com/gojp/goreportcard.git \
+    cd goreportcard \
+    make install \
+    go install ./cmd/goreportcard-cli \
+    goreportcard-cli \
+    cd ..
+
 COPY . ./
 
 RUN go build
@@ -13,13 +20,6 @@ RUN go build
 FROM golang:1.16-alpine
 
 WORKDIR /
-
-RUN git clone https://github.com/gojp/goreportcard.git \
-    cd goreportcard \
-    make install \
-    go install ./cmd/goreportcard-cli \
-    goreportcard-cli \
-    cd ..
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY --from=build /go/go-badges/ .
