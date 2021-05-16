@@ -5,22 +5,23 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
+	"strconv"
 	"strings"
+	"time"
 )
 
 const badgeFlag = "<!---badges-->"
-const prdVersionFlag = "<!---prd-version-->"
-const stgVersionFlag = "<!---stg-version-->"
-const devVersionFlag = "<!---dev-version-->"
+const versionFlag = "<!---dev-version-->"
 
 func main() {
 	log.Println("Generating badges...")
-	log.Println(os.Getenv("INPUT_REPORT-CARD"))
-	log.Println(os.Getenv("INPUT_VERSION"))
-	log.Println(os.Getenv("INPUT_COVERAGE"))
-	log.Println(os.Getenv("INPUT_README-PATH"))
+	runReportCard := os.Getenv("INPUT_REPORT-CARD") == "true"
+	versionInput := os.Getenv("INPUT_VERSION")
+	coverageInput := os.Getenv("INPUT_COVERAGE")
+	readmePath := os.Getenv("INPUT_README-PATH")
 
-	b, err := ioutil.ReadFile("/github/workspace/README.md")
+	b, err := ioutil.ReadFile("/github/workspace/" + readmePath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -28,76 +29,67 @@ func main() {
 	lines := strings.Split(string(b), "\n")
 
 	fmt.Println(lines)
-
-	/*
-	coverageInput := os.Args[1]
-	reportCard := os.Args[2]
-	version := strings.Split(os.Args[3], ";")
-
-	b, err := ioutil.ReadFile("README.md")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	lines := strings.Split(string(b), "\n")
-
-	coverage, err := strconv.ParseFloat(coverageInput, 64)
-	if err != nil {
-		return
-	}
-
 	coverageBadge := fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/green)"
-	if coverage < 80 && coverage >= 70 {
-		coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/yellow)"
-	} else if coverage < 70 && coverage >= 60 {
-		coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/yellow)"
-	} else if coverage < 60 {
-		coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/red)"
+	if coverageInput != "-1" {
+		coverage, err := strconv.ParseFloat(coverageInput, 64)
+		if err != nil {
+			return
+		}
+		if coverage < 80 && coverage >= 70 {
+			coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/yellow)"
+		} else if coverage < 70 && coverage >= 60 {
+			coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/yellow)"
+		} else if coverage < 60 {
+			coverageBadge = fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/red)"
+		}
 	}
 
-	reportCardResults := strings.Split(reportCard, "\n")
-	reportCardGrade := strings.ReplaceAll(strings.ReplaceAll(strings.Split(reportCardResults[0], ": ")[1], "%", "%25"), " ", "%20")
-	reportCardBadge := "![](https://badgen.net/badge/Report%20Card/" + reportCardGrade
-	if strings.Contains(reportCard, "A") {
-		reportCardBadge = reportCardBadge + "/green)"
-	} else if strings.Contains(reportCard, "B") {
-		reportCardBadge = reportCardBadge + "/yellow)"
-	} else if strings.Contains(reportCard, "C") {
-		reportCardBadge = reportCardBadge + "/orange)"
-	} else {
-		reportCardBadge = reportCardBadge + "/red)"
+	reportCardBadge := "![](https://badgen.net/badge/Report%20Card/"
+	var reportCardResults []string
+	if runReportCard {
+		cmd, err := exec.Command("/bin/sh", "reportcard.sh").Output()
+		if err != nil {
+			log.Fatalf("error %s", err)
+		}
+		output := string(cmd)
+		log.Println(output)
+		reportCard := os.Getenv("reportCard")
+		reportCardResults = strings.Split(reportCard, "\n")
+		reportCardGrade := strings.ReplaceAll(strings.ReplaceAll(strings.Split(reportCardResults[0], ": ")[1], "%", "%25"), " ", "%20")
+		reportCardBadge = reportCardBadge + reportCardGrade
+		if strings.Contains(reportCard, "A") {
+			reportCardBadge = reportCardBadge + "/green)"
+		} else if strings.Contains(reportCard, "B") {
+			reportCardBadge = reportCardBadge + "/yellow)"
+		} else if strings.Contains(reportCard, "C") {
+			reportCardBadge = reportCardBadge + "/orange)"
+		} else {
+			reportCardBadge = reportCardBadge + "/red)"
+		}
+	}
+	if versionInput != "-1" {
+
 	}
 
-	productionVersionBadge := ""
-	stagingVersionBadge := ""
-	developmentVersionBadge := ""
-	switch version[0] {
-	case "production":
-		productionVersionBadge = fmt.Sprintf("![](https://badgen.net/badge/%s%s", strings.Join(version, "/"), "/blue)")
-	case "staging":
-		stagingVersionBadge = fmt.Sprintf("![](https://badgen.net/badge/%s%s", strings.Join(version, "/"), "/cyan)")
-	case "development":
-		developmentVersionBadge = fmt.Sprintf("![](https://badgen.net/badge/%s%s", strings.Join(version, "/"), "/grey)")
-	}
+	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/%s%s", versionInput, "/blue)")
 
 	startReportCard := 11
 	for i, line := range lines {
 		startReportCard += 1
-		if strings.Contains(line, prdVersionFlag) && productionVersionBadge != "" {
-			lines[i] = fmt.Sprintf("%s %s *_Released on %s_\"", productionVersionBadge, prdVersionFlag, time.Now().Local().Format("2006-01-02 3:4:5 PM MST"))
-		}
-		if strings.Contains(line, stgVersionFlag) && stagingVersionBadge != "" {
-			lines[i] = fmt.Sprintf("%s %s *_Released on %s_", stagingVersionBadge, stgVersionFlag, time.Now().Local().Format("2006-01-02 3:4:5 PM MST"))
-		}
-		if strings.Contains(line, devVersionFlag) && developmentVersionBadge != "" {
-			lines[i] = fmt.Sprintf("%s %s *_Released on %s_\"", developmentVersionBadge, devVersionFlag, time.Now().Format("2006-01-02 3:4:5 PM MST"))
+		if strings.Contains(line, versionFlag) && versionBadge != "" {
+			lines[i] = fmt.Sprintf("%s %s *_Released on %s_\"", versionBadge, versionFlag, time.Now().Format("2006-01-02 3:4:5 PM MST"))
 		}
 		if strings.Contains(line, badgeFlag) {
 			lines[i] = fmt.Sprintf("%s %s %s", reportCardBadge, coverageBadge, badgeFlag)
 			startReportCard = -2
 		}
-		if startReportCard >= 0 && startReportCard < len(reportCardResults) {
-			lines[i] = reportCardResults[startReportCard]
+		if reportCardResults != nil && startReportCard >= 0 && startReportCard < len(reportCardResults) {
+			if len(lines) > i && strings.Contains(lines[i], strings.Split(reportCardResults[startReportCard], ":")[0]) {
+				lines[i] = reportCardResults[startReportCard]
+			} else {
+				lines = append(lines[:i+1], lines[i:]...)
+				lines[i] = reportCardResults[startReportCard]
+			}
 			startReportCard += 1
 		}
 	}
@@ -119,6 +111,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Println("Success!")
-	 */
+	log.Println("Success! README.md badge changes were committed to the repo.")
 }

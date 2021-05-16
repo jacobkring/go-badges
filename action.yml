@@ -13,6 +13,10 @@ inputs:
     description: 'Whether or not to run go report card and include the output'
     required: false
     default: "true"
+  report-card-threshhold:
+    description: 'Threshold to fail on report card'
+    required: false
+    default: "80"
   version:
     description: 'String representation of the current code version'
     required: false
