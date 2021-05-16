@@ -29,9 +29,9 @@ func maxedBadges(counts map[string]int, badge string) bool {
 
 func main() {
 	counts := map[string]int{
-		"coverage": 0,
+		"coverage":   0,
 		"reportCard": 0,
-		"version": 0,
+		"version":    0,
 	}
 	log.Println("Generating badges...")
 	reportCard := os.Getenv("INPUT_REPORT-CARD")
@@ -105,7 +105,7 @@ func main() {
 			startReportCard = -1
 		}
 
-		if startReportCard < len(reportCardResults) || startReportCard == -1  {
+		if startReportCard < len(reportCardResults) || startReportCard == -1 {
 			if len(lines) > i && strings.Contains(lines[i], "```") {
 				lines[i] = "```"
 			} else {
