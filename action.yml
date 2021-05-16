@@ -28,9 +28,8 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.commit-msg }}
     - ${{ inputs.readme-path }}
     - ${{ inputs.coverage }}
     - ${{ inputs.report-card }}
     - ${{ inputs.version }}
-    - ${{ inputs.report-card-threshhold }}
+    - ${{ inputs.commit-msg }}

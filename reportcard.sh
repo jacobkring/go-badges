@@ -7,5 +7,8 @@ make install
 go install ./cmd/goreportcard-cli
 cd .. && rm -rf goreportcard
 cd /github/workspace
+ls
+echo "RUNNING REPORT CARD"
 reportCard=`goreportcard-cli`
+echo $reportCard
 cd ../..

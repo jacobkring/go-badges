@@ -52,9 +52,9 @@ func main() {
 			log.Fatalf("error %s", err)
 		}
 		output := string(cmd)
-		log.Println(output)
+		log.Println("command output", output)
 		reportCard := os.Getenv("reportCard")
-		log.Println(reportCard)
+		log.Println("reportCard", reportCard)
 		reportCardResults = strings.Split(reportCard, "\n")
 		reportCardGrade := strings.ReplaceAll(strings.ReplaceAll(strings.Split(reportCardResults[0], ": ")[1], "%", "%25"), " ", "%20")
 		reportCardBadge = reportCardBadge + reportCardGrade
