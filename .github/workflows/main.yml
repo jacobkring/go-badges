@@ -13,7 +13,7 @@ jobs:
           RELEASE_BRANCHES: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-
+          DEFAULT_BUMP: "none"
       - id: badges
         uses: jacobkring/go-badges@v1.6.0
         with:
