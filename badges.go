@@ -10,9 +10,9 @@ import (
 	"strings"
 	"time"
 )
-
-const badgeFlag = "<!---badges-->"
-const versionFlag = "<!---dev-version-->"
+const coverageFlag = "<!---go-badges-coverage-->"
+const reportCardFlag = "<!---go-badges-report-card-->"
+const versionFlag = "<!---go-badges-version-->"
 
 func main() {
 	log.Println("Generating badges...")
@@ -28,7 +28,6 @@ func main() {
 
 	lines := strings.Split(string(b), "\n")
 
-	fmt.Println("Lines: \n", lines)
 	coverageBadge := fmt.Sprintf("![](https://badgen.net/badge/coverage/%s", coverageInput) + "%25/green)"
 	if coverageInput != "-1" {
 		coverage, err := strconv.ParseFloat(coverageInput, 64)
@@ -60,6 +59,7 @@ func main() {
 			reportCardBadge = reportCardBadge + "/red)"
 		}
 	}
+
 	versionBadge := fmt.Sprintf("![](https://badgen.net/badge/%s%s", versionInput, "/blue)")
 
 	startReportCard := 11
@@ -68,9 +68,11 @@ func main() {
 		if strings.Contains(line, versionFlag) && versionBadge != "" {
 			lines[i] = fmt.Sprintf("%s %s *_Released on %s_\"", versionBadge, versionFlag, time.Now().Format("2006-01-02 3:4:5 PM MST"))
 		}
-		if strings.Contains(line, badgeFlag) {
-			lines[i] = fmt.Sprintf("%s %s %s", reportCardBadge, coverageBadge, badgeFlag)
-			startReportCard = -2
+		if strings.Contains(line, coverageFlag) {
+			lines[i] = fmt.Sprintf("%s %s %s", reportCardBadge, coverageBadge, coverageFlag)
+		}
+		if strings.Contains(line, reportCardFlag) {
+			startReportCard = -1
 		}
 		if reportCardResults != nil && startReportCard >= 0 && startReportCard < len(reportCardResults) {
 			if len(lines) > i && strings.Contains(lines[i], strings.Split(reportCardResults[startReportCard], ":")[0]) {
