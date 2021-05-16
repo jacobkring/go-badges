@@ -116,7 +116,7 @@ func main() {
 			counts["reportCard"] += 1
 			startReportCard += 1
 		}
-		i+=1
+		i += 1
 	}
 
 	f, err := os.OpenFile("/github/workspace"+readmePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
