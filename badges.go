@@ -117,6 +117,7 @@ func main() {
 			startReportCard += 1
 		}
 		i += 1
+		fmt.Printf("line: %s\n new line: %s\n\n", line, lines[i])
 	}
 
 	f, err := os.OpenFile("/github/workspace"+readmePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
