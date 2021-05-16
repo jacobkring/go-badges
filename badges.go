@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 	"time"
@@ -98,6 +99,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	cmd, err := exec.Command("/bin/bash", "commit.sh").Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println(string(cmd))
 
 	log.Println("Success! README.md badge changes were committed to the repo.")
 }
