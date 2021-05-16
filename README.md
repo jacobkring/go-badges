@@ -32,35 +32,15 @@ they will be generated after the first run.
 
 #### Coverage
 ```
-![](https://badgen.net/badge/coverage/90.4%25/green) <!---go-badges-coverage-->
+<!---go-badges-coverage-->
+```
+#### Version
+```
+<!---go-badges-version-->
 ```
 #### Report Card
 ```
-![](https://badgen.net/badge/Report%20Card/A+%20(100.0%25)/green) <!---go-badges-report-card-->
-```
-Grade: A+ (100.0%)
-Files: 2
-Issues: 0
-gofmt: 100%
-go_vet: 100%
-gocyclo: 100%
-golint: 100%
-license: 100%
-ineffassign: 100%
-misspell: 100%
-```
-```
-```
-Grade: A+ (94.1%)
-Files: 2
-Issues: 1
-gofmt: 100%
-go_vet: 100%
-gocyclo: 100%
-golint: 50%
-license: 100%
-ineffassign: 100%
-misspell: 100%
+<!---go-badges-report-card-->
 ```
 
 #### Workflow
@@ -76,7 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: badges
-        uses: jacobkring/go-badges@v1
+        uses: jacobkring/go-badges@v1.10.4
         with:
           version: ${{ steps.version.outputs.tag }}
           report-card: ${{ steps.goreportcard.outputs.reportCard }}
