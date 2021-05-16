@@ -23,6 +23,9 @@ jobs:
           go install ./cmd/goreportcard-cli
           cd .. && rm -rf goreportcard
           output=`goreportcard-cli -t 85.0`
+          output="${output//'%'/'%25'}"
+          output="${output//$'\n'/'%0A'}"
+          output="${output//$'\r'/'%0D'}"
           echo "::set-output name=reportCard::${output}"
 
       - name: 'Run Tests'
