@@ -10,15 +10,6 @@ Go Badges is a simple docker action intended to be used in Github Actions for Go
 ```
 Grade: A+ (94.1%)
 ```
-
-## Motivation
-
-I contribute to a number of private Golang repos that make it inconvenient or impossible to use 3rd party tools for things like goreportcard.com and generating badges.
-
-## Usage
-
-In your README file you should leave comments on the lines that you want the badges to be generated.
-Checkout the raw README file in this project for an example. <br/><br/>You do not need to include any badge links,
 they will be generated after the first run.
 
 #### Coverage
@@ -31,15 +22,6 @@ they will be generated after the first run.
 ```
 Grade: A+ (94.1%)
 ```
-          readmePath: 'README.md' # default is README.md
-          coverage: '90.5'
-          reportCard: 'true'
-```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
