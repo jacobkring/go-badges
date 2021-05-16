@@ -9,6 +9,7 @@ cd .. && rm -rf goreportcard
 cd /github/workspace
 ls
 echo "RUNNING REPORT CARD"
+goreportcard-cli -v
 reportCard=`goreportcard-cli`
 echo $reportCard
 cd ../..
