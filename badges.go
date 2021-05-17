@@ -108,14 +108,14 @@ func main() {
 
 	b, err := ioutil.ReadFile(readmeBasePath + readmePath)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("read existing readme", err)
 	}
 
 	lines := strings.Split(string(b), "\n")
 
 	cBadge, err := coverageBadge(coverageInput)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("coverage badge", err)
 	}
 
 	rcBadge, reportCardResults := reportCardBadge(reportCard)
@@ -126,28 +126,28 @@ func main() {
 
 	f, err := os.OpenFile(readmeBasePath+readmePath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("open file for writing", err)
 	}
 
 	err = f.Truncate(0)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("truncate file", err)
 	}
 
 	output := strings.Join(lines, "\n")
 	_, err = fmt.Fprintf(f, "%s", output)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("join lines", err)
 	}
 
 	err = f.Close()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("close file", err)
 	}
 
 	_, err = exec.Command("/bin/sh", "commit.sh").Output()
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("run commit", err)
 	}
 
 	log.Println("Success! README.md badge changes were committed to the repo.")
