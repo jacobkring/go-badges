@@ -1,10 +1,8 @@
 #!/bin/bash
 
-ls
-
-./go-badges
-
+echo "github actions"
 echo $GITHUB_ACTIONS
+echo "github token"
 echo $GITHUB_TOKEN
 
 if [ $GITHUB_ACTIONS == "true" ] ; then
