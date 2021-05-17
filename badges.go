@@ -2,9 +2,12 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
+	"os/exec"
 	"strconv"
 	"strings"
 )
@@ -96,6 +99,29 @@ func modifyLines(lines []string, reportCardResults []string, versionBadge string
 
 var readmeBasePath = "/github/workspace"
 
+// DownloadCommit will download a bash script to a local file. It's efficient because it will
+// write as it downloads and not load the whole file into memory.
+func DownloadCommit(filepath string) error {
+
+	// Get the data
+	resp, err := http.Get("https://raw.githubusercontent.com/jacobkring/go-badges/main/commit.sh")
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Create the file
+	out, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// Write the body to file
+	_, err = io.Copy(out, resp.Body)
+	return err
+}
+
 func main() {
 	log.Println("Generating badges...")
 	reportCard := os.Getenv("INPUT_REPORT-CARD")
@@ -144,16 +170,17 @@ func main() {
 		log.Fatal("close file", err)
 	}
 
-	/*
-		cmd, err := exec.Command("/bin/sh", "commit.sh").Output()
-		if err != nil {
-			log.Println("result commit", string(cmd))
-			log.Fatal("run commit", err)
-		}
-
+	err = DownloadCommit("tmp_commit.sh")
+	if err != nil {
+		log.Fatal("download commit", err)
+	}
+	cmd, err := exec.Command("/bin/sh", "tmp_commit.sh").Output()
+	if err != nil {
 		log.Println("result commit", string(cmd))
+		log.Fatal("run commit", err)
+	}
 
-	*/
+	log.Println("result commit", string(cmd))
 
 	log.Println("Success!")
 }
