@@ -145,10 +145,12 @@ func main() {
 		log.Fatal("close file", err)
 	}
 
-	_, err = exec.Command("/bin/sh", "commit.sh").Output()
+	cmd, err := exec.Command("/bin/sh", "commit.sh").Output()
 	if err != nil {
 		log.Fatal("run commit", err)
 	}
+
+	log.Println("result commit", string(cmd))
 
 	log.Println("Success! README.md badge changes were committed to the repo.")
 }

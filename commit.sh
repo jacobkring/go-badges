@@ -1,8 +1,5 @@
 #!/bin/bash
 
-
-
-
 echo $GITHUB_ACTIONS
 echo $GITHUB_TOKEN
 
