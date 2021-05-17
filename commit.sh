@@ -1,9 +1,13 @@
-#!/bin/bash
+#!/bin/sh -l
 
 echo "github actions"
 echo $GITHUB_ACTIONS
 echo "github token"
 echo $GITHUB_TOKEN
+
+ls
+
+./go-badges
 
 if [ $GITHUB_ACTIONS == "true" ] ; then
   source=${SOURCE:-.}

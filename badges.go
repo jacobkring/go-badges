@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
 )
@@ -145,13 +144,16 @@ func main() {
 		log.Fatal("close file", err)
 	}
 
-	cmd, err := exec.Command("/bin/sh", "commit.sh").Output()
-	if err != nil {
-		log.Println("result commit", string(cmd))
-		log.Fatal("run commit", err)
-	}
+	/*
+		cmd, err := exec.Command("/bin/sh", "commit.sh").Output()
+		if err != nil {
+			log.Println("result commit", string(cmd))
+			log.Fatal("run commit", err)
+		}
 
-	log.Println("result commit", string(cmd))
+		log.Println("result commit", string(cmd))
+
+	*/
 
 	log.Println("Success!")
 }
