@@ -147,6 +147,7 @@ func main() {
 
 	cmd, err := exec.Command("/bin/sh", "commit.sh").Output()
 	if err != nil {
+		log.Println("result commit", string(cmd))
 		log.Fatal("run commit", err)
 	}
 
