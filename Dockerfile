@@ -18,4 +18,4 @@ RUN apk add git
 COPY --from=build /go/go-badges/go-badges .
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/go-badges"]
+ENTRYPOINT ["/commit.sh"]

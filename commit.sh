@@ -1,5 +1,7 @@
 #!/bin/bash
 
+./go-badges
+
 echo $GITHUB_ACTIONS
 echo $GITHUB_TOKEN
 
