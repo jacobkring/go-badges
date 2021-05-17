@@ -53,9 +53,9 @@ jobs:
           DEFAULT_BUMP: "none"
 
       - id: badges
-        uses: jacobkring/go-badges@v1.10.5
+        uses: jacobkring/go-badges@v1.10.6
         with:
-          version: v1.10.5
+          version: v1.10.6
           report-card: ${{ steps.goreportcard.outputs.reportCard }}
           coverage: ${{ steps.coverage.outputs.coverage }}
           IS_GO_BADGES: "true"
