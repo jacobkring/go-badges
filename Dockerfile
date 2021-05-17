@@ -19,4 +19,4 @@ COPY --from=build /go/go-badges/go-badges /go-badges
 COPY --from=build /go/go-badges/commit.sh /commit.sh
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
-ENTRYPOINT ["/commit.sh"]
+ENTRYPOINT ["/go-badges"]
