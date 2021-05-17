@@ -1,5 +1,7 @@
 #!/bin/bash
 
+ls
+
 ./go-badges
 
 echo $GITHUB_ACTIONS
