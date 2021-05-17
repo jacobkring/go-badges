@@ -5,8 +5,10 @@ echo $GITHUB_ACTIONS
 echo "github token"
 echo $GITHUB_TOKEN
 
-ls
+echo "---- github workspace"
+ls ${GITHUB_WORKSPACE}/${source}
 
+echo "------"
 ./go-badges
 
 if [ $GITHUB_ACTIONS == "true" ] ; then
