@@ -53,11 +53,11 @@ jobs:
           DEFAULT_BUMP: "none"
 
       - id: badges
-        uses: jacobkring/go-badges@v1.10.7
+        uses: jacobkring/go-badges@v1.10.8
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          version: v1.10.6
+          version: v1.10.8
           report-card: ${{ steps.goreportcard.outputs.reportCard }}
           coverage: ${{ steps.coverage.outputs.coverage }}
           IS_GO_BADGES: "true"
