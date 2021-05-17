@@ -17,5 +17,5 @@ if [ $GITHUB_ACTIONS == "true" ] ; then
   git add README.md
   git commit -m $INPUT_COMMIT-MSG
   git push
+  cd ../..
 fi
-cd ../..
