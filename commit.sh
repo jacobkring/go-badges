@@ -10,7 +10,6 @@ echo "---- github workspace"
 ls ${GITHUB_WORKSPACE}/${source}
 
 echo "------"
-./go-badges
 
 if [ $GITHUB_ACTIONS == "true" ] ; then
   source=${SOURCE:-.}
