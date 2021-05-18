@@ -20,7 +20,7 @@ if [ $GITHUB_ACTIONS == "true" ] ; then
   git remote set-url origin https://x-access-token:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY
   git checkout "${GITHUB_REF:11}"
   git add README.md
-  git commit -m $INPUT_COMMIT-MSG
+  git commit -m $INPUT_COMMIT_MSG
   git push
   cd ../..
 fi
