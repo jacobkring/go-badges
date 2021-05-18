@@ -4,6 +4,7 @@ echo "github actions"
 echo $GITHUB_ACTIONS
 echo "github token"
 echo $GITHUB_TOKEN
+echo $INPUT_COMMIT_MSG
 
 echo "---- github workspace"
 ls ${GITHUB_WORKSPACE}/${source}
