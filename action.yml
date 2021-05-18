@@ -16,10 +16,6 @@ inputs:
     description: 'String representation of the current code version'
     required: false
     default: "-1"
-  commit_msg:
-    description: 'message to include in the readme commit'
-    required: false
-    default: 'go-badges update'
   IS_GO_BADGES:
     description: 'flag for go badges to not mess up examples'
     required: false
@@ -35,5 +31,4 @@ runs:
     - ${{ inputs.coverage }}
     - ${{ inputs.report-card }}
     - ${{ inputs.version }}
-    - ${{ inputs.commit_msg }}
     - ${{ inputs.IS_GO_BADGES }}
