@@ -8,7 +8,6 @@ if [ $GITHUB_ACTIONS == "true" ] ; then
   source=${SOURCE:-.}
   git remote -v
 
-  cd ${GITHUB_WORKSPACE}/${source}
   git clone $GITHUB_REPOSITORY local_repo
   rm local_repo/README.md
   mv README.md local_repo/README.md
