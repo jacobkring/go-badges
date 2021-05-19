@@ -57,7 +57,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          version: v1.10.312
+          version: v1.10.32
           report-card: ${{ steps.goreportcard.outputs.reportCard }}
           coverage: ${{ steps.coverage.outputs.coverage }}
           IS_GO_BADGES: "true"
