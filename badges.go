@@ -129,7 +129,7 @@ func main() {
 	coverageInput := os.Getenv("INPUT_COVERAGE")
 	readmePath := os.Getenv("INPUT_README-PATH")
 
-	log.Println(reportCard)
+	log.Println(versionInput, coverageInput)
 
 	b, err := ioutil.ReadFile(readmeBasePath + readmePath)
 	if err != nil {
