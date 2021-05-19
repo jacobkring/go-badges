@@ -2,16 +2,16 @@
 
 Go Badges is a simple docker action intended to be used in Github Actions for Golang projects. Badges are generated using various inputs and comment tags in your README file.
 <br/><br/>
-![](https://badgen.net/badge/coverage/87.8%25/green) <!---go-badges-coverage-->
-![](https://badgen.net/badge/release/v1.10.33/blue) <!---go-badges-version-->
+![](https://badgen.net/badge/coverage/81.1%25/green) <!---go-badges-coverage-->
+![](https://badgen.net/badge/release/v1.10.34/blue) <!---go-badges-version-->
 <br/>![](https://badgen.net/badge/license/MIT/blue) <br/>
 #### Go Report Card
-![](https://badgen.net/badge/Report%20Card/A+%20(100.0%25)/green) <!---go-badges-report-card-->
+![](https://badgen.net/badge/Report%20Card/A%20(82.4%25)/green) <!---go-badges-report-card-->
 ```
-Grade: A+ (100.0%)
+Grade: A (82.4%)
 Files: 2
-Issues: 0
-gofmt: 100%
+Issues: 1
+gofmt: 50%
 go_vet: 100%
 gocyclo: 100%
 golint: 100%
