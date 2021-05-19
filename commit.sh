@@ -14,6 +14,6 @@ if [ $GITHUB_ACTIONS == "true" ] ; then
   # git checkout "${GITHUB_REF#refs/heads/}"
   git add README.md
   git commit -m "go-badges update"
-  git push
+  git push --verbose
   echo "commit complete"
 fi
