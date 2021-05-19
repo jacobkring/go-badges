@@ -15,18 +15,9 @@ jobs:
 
       - name: Go Report Card
         id: goreportcard
-        run: |
-          go get -u github.com/client9/misspell/cmd/misspell
-          git clone https://github.com/gojp/goreportcard.git
-          cd goreportcard
-          make install
-          go install ./cmd/goreportcard-cli
-          cd .. && rm -rf goreportcard
-          output=`goreportcard-cli -t 85.0`
-          output="${output//'%'/'%25'}"
-          output="${output//$'\n'/'%0A'}"
-          output="${output//$'\r'/'%0D'}"
-          echo "::set-output name=reportCard::${output}"
+        uses: jacobkring/actions-goreportcard@v0.0.5
+        with:
+          threshold: "-t 80"
 
       - name: 'Run Tests'
         run: |
@@ -56,7 +47,7 @@ jobs:
         uses: jacobkring/go-badges@v1.10.34
         with:
           version: v1.10.34
-          report-card: ${{ steps.goreportcard.outputs.reportCard }}
+          report-card: ${{ steps.goreportcard.outputs.summary }}
           coverage: ${{ steps.coverage.outputs.coverage }}
           IS_GO_BADGES: "true"
 
