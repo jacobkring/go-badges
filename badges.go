@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
 )
@@ -170,17 +169,6 @@ func main() {
 		log.Fatal("close file", err)
 	}
 
-	err = DownloadCommit("tmp_commit.sh")
-	if err != nil {
-		log.Fatal("download commit", err)
-	}
-	cmd, err := exec.Command("/bin/sh", "tmp_commit.sh").Output()
-	if err != nil {
-		log.Println("result commit", string(cmd))
-		log.Fatal("run commit", err)
-	}
-
-	log.Println("result commit", string(cmd))
 
 	log.Println("Success!")
 }

@@ -53,15 +53,14 @@ jobs:
           DEFAULT_BUMP: "none"
 
       - id: badges
-        uses: jacobkring/go-badges@v1.10.33
+        uses: jacobkring/go-badges@v1.10.34
         with:
-          version: v1.10.33
+          version: v1.10.34
           report-card: ${{ steps.goreportcard.outputs.reportCard }}
           coverage: ${{ steps.coverage.outputs.coverage }}
           IS_GO_BADGES: "true"
 
       - name: Commit README.md
-        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         run: |
           git config --global user.name "$(git --no-pager log --format=format:'%an' -n 1)"
           git config --global user.email "$(git --no-pager log --format=format:'%ae' -n 1)"
@@ -69,4 +68,3 @@ jobs:
           git add README.md
           git commit -m "go-badges update"
           git push
-
